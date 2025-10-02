@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card form-card">
+  <h2>Personal Details</h2>
+  <form method="post">
+    <label>Full Name</label><input name="full_name" value="{{ pd.full_name if pd else '' }}">
+    <label>Aadhar</label><input name="aadhar" value="{{ pd.aadhar if pd else '' }}">
+    <label>Passport</label><input name="passport" value="{{ pd.passport if pd else '' }}">
+    <label>PAN</label><input name="pancard" value="{{ pd.pancard if pd else '' }}">
+    <label>Address</label><textarea name="address">{{ pd.address if pd else '' }}</textarea>
+    <button class="btn" type="submit">Save</button>
+  </form>
+</div>
+{% endblock %}

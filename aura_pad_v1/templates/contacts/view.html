@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <div class="row">
+    <h2>Contacts</h2>
+    <form method="get" action="{{ url_for('contacts_view') }}"><input name="q" placeholder="Search by name" value="{{ q }}"><button class="btn">Search</button></form>
+    <a class="btn" href="{{ url_for('contacts_add') }}">Add</a>
+    <a class="btn" href="{{ url_for('export_contacts') }}">Export CSV</a>
+  </div>
+  <ul class="list">
+    {% for c in contacts %}
+      <li class="list-item card">
+        <div><strong>{{ c.name }}</strong> <small class="muted">{{ c.phone }}</small></div>
+        <div class="actions">
+          <a href="{{ url_for('contacts_edit', id=c.id) }}" class="btn">Edit</a>
+          <form method="post" action="{{ url_for('contacts_delete', id=c.id) }}" style="display:inline"><button class="btn" type="submit">Delete</button></form>
+        </div>
+      </li>
+    {% else %}<li>No contacts yet</li>{% endfor %}
+  </ul>
+</div>
+{% endblock %}

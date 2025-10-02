@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card form-card">
+  <h2>Add Event</h2>
+  <form method="post">
+    <label>Title</label><input name="title" required maxlength="200">
+    <label>Date (YYYY-MM-DD)</label><input name="date" required placeholder="YYYY-MM-DD">
+    <label>Description</label><textarea name="description"></textarea>
+    <button class="btn" type="submit">Save</button>
+  </form>
+</div>
+{% endblock %}

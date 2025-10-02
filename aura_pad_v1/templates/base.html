@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AuraPad</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <nav class="topnav">
+    <a href="{{ url_for('index') }}"><div class="brand">AuraPad</div></a>
+    <div class="navlinks">
+      <a href="{{ url_for('index') }}">Dashboard</a>
+      <a href="{{ url_for('contacts_view') }}">Contacts</a>
+      <a href="{{ url_for('health_view') }}">Health</a>
+      <a href="{{ url_for('personal') }}">Personal</a>
+      <a href="{{ url_for('notes_list') }}">Notes</a>
+      <a href="{{ url_for('events_view') }}">Events</a>
+    </div>
+  </nav>
+  <main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="toast show">
+          {% for cat, msg in messages %}
+            <div class="toast-msg">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="footer">Made with ♥ — AuraPad</footer>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

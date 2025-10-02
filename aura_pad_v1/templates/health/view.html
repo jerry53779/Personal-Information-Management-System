@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <div class="row"><h2>Health Records</h2><a class="btn" href="{{ url_for('health_add') }}">Add</a></div>
+  <ul class="list">
+    {% for r in records %}
+      <li class="list-item card">
+        <div><strong>{{ r.created_at.strftime('%Y-%m-%d') }}</strong></div>
+        <div>Weight: {{ r.weight_kg or '—' }} kg | Height: {{ r.height_cm or '—' }} cm</div>
+        <div>BP: {{ r.bp_systolic or '—' }}/{{ r.bp_diastolic or '—' }}</div>
+        <div class="muted">{{ r.notes or '' }}</div>
+      </li>
+    {% else %}<li>No records</li>{% endfor %}
+  </ul>
+</div>
+{% endblock %}

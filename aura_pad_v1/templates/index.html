@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero card">
+  <h1>Welcome to AuraPad</h1>
+  <p class="muted">Your local-first personal info manager.</p>
+</section>
+
+<section class="grid">
+  <div class="card">
+    <a href="{{ url_for('contacts_view') }}">
+      <h3>Contacts</h3>
+      <p>{{ contacts_count }}</p>
+    </a>
+  </div>
+
+  <div class="card">
+    <a href="{{ url_for('health_view') }}">
+      <h3>Health Records</h3>
+      <p>{{ health_count }}</p>
+    </a>
+  </div>
+
+  <div class="card">
+    <a href="{{ url_for('notes_list') }}">
+      <h3>Notes</h3>
+      <p>{{ notes_count }}</p>
+    </a>
+  </div>
+</section>
+
+<section class="card">
+  <h3>Upcoming</h3>
+  <ul>
+    {% for e in upcoming %}
+      <li>{{ e.date }} — {{ e.title }}</li>
+    {% else %}
+      <li>No upcoming events</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

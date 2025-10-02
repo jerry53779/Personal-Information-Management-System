@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <div class="row">
+    <h2>Notes</h2>
+    <a class="btn" href="{{ url_for('notes_add') }}">Add Note</a>
+  </div>
+  <ul class="list">
+    {% for n in notes %}
+      <li class="list-item card">
+        <div><strong>{{ n.title }}</strong> <small class="muted">{{ n.updated_at.strftime('%Y-%m-%d') }}</small></div>
+        <div class="muted">{{ n.body[:140] }}</div>
+        <div class="actions">
+          <a class="btn" href="{{ url_for('notes_edit', id=n.id) }}">Edit</a>
+          <form method="post" action="{{ url_for('notes_delete', id=n.id) }}" style="display:inline"><button class="btn" type="submit">Delete</button></form>
+        </div>
+      </li>
+    {% else %}<li>No notes yet</li>{% endfor %}
+  </ul>
+</div>
+{% endblock %}

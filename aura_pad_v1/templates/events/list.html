@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+  <div class="row">
+    <h2>Events & Calendar</h2>
+    <a class="btn" href="{{ url_for('events_add') }}">Add Event</a>
+  </div>
+  <div id="calendar"></div>
+  <div id="day-events" class="card"></div>
+</div>
+<script>
+// Simple calendar rendering (month grid)
+fetch('{{ url_for('api_events') }}').then(r=>r.json()).then(events=>{
+    window.__AP_EVENTS = events;
+    const cal = document.getElementById('calendar');
+    cal.innerHTML = '<p>Loading calendar...</p>';
+    // minimal calendar: list upcoming 30 days with dots
+    const today = new Date();
+    let html = '<div class="mini-grid">';
+    for (let i=0;i<30;i++){
+        const d = new Date(today.getFullYear(), today.getMonth(), today.getDate()+i);
+        const iso = d.toISOString().slice(0,10);
+        const dayEvents = events.filter(e=>e.date === iso);
+        html += `<div class="cal-day card" data-date="${iso}"><div class="date">${iso}</div>${dayEvents.length?'<div class="dot"></div>':''}</div>`;
+    }
+    html += '</div>';
+    cal.innerHTML = html;
+    document.querySelectorAll('.cal-day').forEach(el=>el.addEventListener('click', ()=>{
+        const date = el.dataset.date;
+        const dayEvents = window.__AP_EVENTS.filter(e=>e.date===date);
+        const de = document.getElementById('day-events');
+        if(dayEvents.length===0){ de.innerHTML = '<p>No events for '+date+'</p>'; return; }
+        de.innerHTML = dayEvents.map(e=>`<div class="card"><strong>${e.title}</strong><p>${e.description}</p></div>`).join('');
+    }))
+});
+</script>
+{% endblock %}
